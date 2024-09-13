@@ -15,3 +15,5 @@ resources:
   - media-data-persistentvolumeclaim.yaml
   - protected-deployment.yaml
   - static-data-persistentvolumeclaim.yaml
+  - configmap.yaml
+  - secret.yaml
