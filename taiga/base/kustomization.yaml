@@ -13,6 +13,11 @@ resources:
   - pvc-events-rabbitmq-data.yaml
   - pvc-media-data.yaml
   - pvc-static-data.yaml
+  - pv-async-rabbitmq-data.yaml
+  - pv-db-data.yaml
+  - pv-events-rabbitmq-data.yaml
+  - pv-media-data.yaml
+  - pv-static-data.yaml
   - service-gateway.yaml
   - configmap-gateway-cm0.yaml
   - configmap.yaml
