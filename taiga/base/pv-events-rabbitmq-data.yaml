@@ -9,4 +9,4 @@ spec:
     storage: 1Gi
   hostPath:
     path: /mnt/disks/taiga/events-rabbitmq-data
-  storageClassName: taiga-local-storage
+  storageClassName: local-storage

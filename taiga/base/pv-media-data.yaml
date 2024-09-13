@@ -9,4 +9,4 @@ spec:
     storage: 10Gi
   hostPath:
     path: /mnt/disks/taiga/media-data
-  storageClassName: taiga-local-storage
+  storageClassName: local-storage
