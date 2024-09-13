@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-    app: taiga
+      app: taiga
   template:
     metadata:
       labels:
-    app: taiga
+        app: taiga
     spec:
       containers:
         - name: taiga-front
