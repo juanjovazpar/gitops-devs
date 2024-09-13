@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: taiga
+  name: taiga-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taiga
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: taiga
+    spec:
+      containers:
+        - name: taiga-db
+          image: postgres:12.3
+          envFrom:
+            - configMapRef:
+                name: taiga-env
+            - secretRef:
+                name: taiga-secrets
+          livenessProbe:
+            exec:
+              command:
+                - 'pg_isready -U '
+            failureThreshold: 5
+            initialDelaySeconds: 3
+            periodSeconds: 2
+            timeoutSeconds: 15
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: taiga-db-data
+      restartPolicy: Always
+      volumes:
+        - name: taiga-db-data
+          persistentVolumeClaim:
+            claimName: taiga-db-data

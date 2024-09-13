@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: taiga
+  name: taiga-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taiga
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: taiga
+    spec:
+      containers:
+        - name: taiga-gateway
+          image: nginx:1.19-alpine
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d/default.conf
+              name: taiga-gateway-cm0
+              subPath: default.conf
+            - mountPath: /taiga/static
+              name: taiga-static-data
+            - mountPath: /taiga/media
+              name: taiga-media-data
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            items:
+              - key: taiga.conf
+                path: default.conf
+            name: taiga-gateway-cm0
+          name: taiga-gateway-cm0
+        - name: taiga-static-data
+          persistentVolumeClaim:
+            claimName: taiga-static-data
+        - name: taiga-media-data
+          persistentVolumeClaim:
+            claimName: taiga-media-data

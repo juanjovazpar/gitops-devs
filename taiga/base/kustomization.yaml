@@ -1,0 +1,17 @@
+resources:
+  - async-deployment.yaml
+  - async-rabbitmq-data-persistentvolumeclaim.yaml
+  - async-rabbitmq-deployment.yaml
+  - back-deployment.yaml
+  - db-data-persistentvolumeclaim.yaml
+  - db-deployment.yaml
+  - events-deployment.yaml
+  - events-rabbitmq-data-persistentvolumeclaim.yaml
+  - events-rabbitmq-deployment.yaml
+  - front-deployment.yaml
+  - gateway-cm0-configmap.yaml
+  - gateway-deployment.yaml
+  - gateway-service.yaml
+  - media-data-persistentvolumeclaim.yaml
+  - protected-deployment.yaml
+  - static-data-persistentvolumeclaim.yaml

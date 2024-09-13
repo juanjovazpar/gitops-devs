@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: taiga
+  name: taiga-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+    app: taiga
+  template:
+    metadata:
+      labels:
+    app: taiga
+    spec:
+      containers:
+        - name: taiga-front
+          image: taigaio/taiga-front:latest
+          envFrom:
+            - configMapRef:
+                name: taiga-env
+            - secretRef:
+                name: taiga-secrets
+      restartPolicy: Always
