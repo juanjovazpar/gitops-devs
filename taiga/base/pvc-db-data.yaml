@@ -3,10 +3,11 @@ kind: PersistentVolumeClaim
 metadata:
   labels:
     app: taiga
-  name: taiga-events-rabbitmq-data
+  name: taiga-db-data
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 100Mi
+      storage: 10Gi
+  storageClassName: taiga-local-storage
