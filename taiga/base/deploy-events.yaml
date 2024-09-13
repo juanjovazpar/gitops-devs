@@ -17,6 +17,8 @@ spec:
       containers:
         - image: taigaio/taiga-events:latest
           name: taiga-events
+          ports:
+            - containerPort: 8888
           envFrom:
             - configMapRef:
                 name: taiga-env
