@@ -8,8 +8,8 @@ data:
   DEFAULT_FROM_EMAIL: ''
   EMAIL_HOST_USER: ''
   EMAIL_PORT: '587'
-  EMAIL_USE_SSL: false
-  EMAIL_USE_TLS: true
+  EMAIL_USE_SSL: 'false'
+  EMAIL_USE_TLS: 'true'
   EMAIL_BACKEND: django.core.mail.backends..EmailBackend
   EMAIL_HOST: ''
   ENABLE_TELEMETRY: ''
