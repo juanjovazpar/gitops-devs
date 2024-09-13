@@ -17,4 +17,3 @@ resources:
   - configmap-gateway-cm0.yaml
   - configmap.yaml
   - secret.yaml
-  - storage-class.yaml
