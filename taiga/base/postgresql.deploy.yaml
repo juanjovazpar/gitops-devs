@@ -35,6 +35,19 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 5
+      initContainers:
+        - name: init-db
+          image: postgres:12.3
+          command: ['/bin/sh', '-c']
+          args:
+            - >
+              psql -U postgres -c "CREATE ROLE postgres LOGIN SUPERUSER PASSWORD '${POSTGRES_PASSWORD}'";
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_PASSWORD
       volumes:
         - name: postgresql-storage
           persistentVolumeClaim:
