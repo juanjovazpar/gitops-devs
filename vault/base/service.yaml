@@ -3,11 +3,10 @@ kind: Service
 metadata:
   name: vault
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: vault
   ports:
     - protocol: TCP
       port: 8200
       targetPort: 8200
-  type: LoadBalancer 
