@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: taiga-rabbitmq
+  name: taiga-async-rabbitmq
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: taiga-rabbitmq
+      app: taiga-async-rabbitmq
   template:
     metadata:
       labels:
-        app: taiga-rabbitmq
+        app: taiga-async-rabbitmq
     spec:
       containers:
         - name: rabbitmq
@@ -18,10 +18,15 @@ spec:
           ports:
             - containerPort: 5672
             - containerPort: 15672
+          envFrom:
+            - configMapRef:
+                name: taiga-config
+            - secretRef:
+                name: taiga-secrets
           env:
             - name: RABBITMQ_DEFAULT_USER
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: taiga-config
                   key: RABBITMQ_USER
             - name: RABBITMQ_DEFAULT_PASS
@@ -29,15 +34,15 @@ spec:
                 secretKeyRef:
                   name: taiga-secrets
                   key: RABBITMQ_PASS
-            - name: RABBITMQ_ERLANG_COOKIE
+            - name: RABBITMQ_DEFAULT_VHOST
               valueFrom:
                 secretKeyRef:
-                  name: taiga-secrets
-                  key: RABBITMQ_ERLANG_COOKIE
+                  name: taiga-config
+                  key: RABBITMQ_VHOST
           volumeMounts:
-            - name: rabbitmq-storage
+            - name: rabbitmq-data
               mountPath: /var/lib/rabbitmq
       volumes:
-        - name: rabbitmq-storage
+        - name: rabbitmq-data
           persistentVolumeClaim:
             claimName: taiga-rabbitmq-async-pvc

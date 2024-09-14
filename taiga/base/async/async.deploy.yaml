@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taiga-async
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taiga-async
+  template:
+    metadata:
+      labels:
+        app: taiga-async
+    spec:
+      containers:
+        - name: taiga-back
+          image: taigaio/taiga-back:latest
+          command: ['/taiga-back/docker/async_entrypoint.sh']
+          envFrom:
+            - configMapRef:
+                name: taiga-config
+            - secretRef:
+                name: taiga-secrets
+          volumeMounts:
+            - name: taiga-static-data
+              mountPath: /taiga-back/static
+            - name: taiga-media-data
+              mountPath: /taiga-back/media
+      volumes:
+        - name: taiga-static-data
+          persistentVolumeClaim:
+            claimName: taiga-static-pvc
+        - name: taiga-media-data
+          persistentVolumeClaim:
+            claimName: taiga-media-pvc

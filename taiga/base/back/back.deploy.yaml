@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taiga-back
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taiga-back
+  template:
+    metadata:
+      labels:
+        app: taiga-back
+    spec:
+      containers:
+        - name: taiga-back
+          image: taigaio/taiga-back:latest
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: taiga-config
+            - secretRef:
+                name: taiga-secrets
+          volumeMounts:
+            - name: static-storage
+              mountPath: /taiga-back/static
+            - name: media-storage
+              mountPath: /taiga-back/media
+      volumes:
+        - name: static-storage
+          persistentVolumeClaim:
+            claimName: taiga-static-pvc
+        - name: media-storage
+          persistentVolumeClaim:
+            claimName: taiga-media-pvc

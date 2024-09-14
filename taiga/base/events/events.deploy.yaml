@@ -17,19 +17,14 @@ spec:
           image: taigaio/taiga-events:latest
           ports:
             - containerPort: 8888
+          envFrom:
+            - configMapRef:
+                name: taiga-config
+            - secretRef:
+                name: taiga-secrets
           env:
-            - name: RABBITMQ_USER
+            - name: TAIGA_SECRET_KEY
               valueFrom:
                 configMapKeyRef:
                   name: taiga-config
-                  key: RABBITMQ_USER
-            - name: RABBITMQ_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: taiga-secrets
-                  key: RABBITMQ_PASS
-            - name: TAIGA_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: taiga-secrets
-                  key: TAIGA_SECRET_KEY
+                  key: SECRET_KEY
