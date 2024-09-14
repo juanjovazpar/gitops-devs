@@ -1,26 +1,24 @@
 resources:
-  - deploy-async.yaml
-  - deploy-async-rabbitmq.yaml
-  - deploy-back.yaml
-  - deploy-db.yaml
-  - deploy-events.yaml
-  - deploy-events-rabbitmq.yaml
-  - deploy-gateway.yaml
-  - deploy-protected.yaml
-  - deploy-front.yaml
-  - pvc-async-rabbitmq-data.yaml
-  - pvc-db-data.yaml
-  - pvc-events-rabbitmq-data.yaml
-  - pvc-media-data.yaml
-  - pvc-static-data.yaml
-  - pv-async-rabbitmq-data.yaml
-  - pv-db-data.yaml
-  - pv-events-rabbitmq-data.yaml
-  - pv-media-data.yaml
-  - pv-static-data.yaml
-  - service-back.yaml
-  - service-db.yaml
-  - service-gateway.yaml
-  - configmap-gateway-cm0.yaml
+  - back.deploy.yaml
+  - back.service.yaml
   - configmap.yaml
+  - front.deploy.yaml
+  - front.service.yaml
+  - kustomization.yaml
+  - media.pv.yaml
+  - media.pvc.yaml
+  - postgresql.deploy.yaml
+  - postgresql.pv.yaml
+  - postgresql.pvc.yaml
+  - postgresql.service.yaml
+  - rabbitmq-events.deploy.yaml
+  - rabbitmq-events.pv.yaml
+  - rabbitmq-events.pvc.yaml
+  - rabbitmq-events.service.yaml
+  - rabbitmq.deploy.yaml
+  - rabbitmq.pv.yaml
+  - rabbitmq.pvc.yaml
+  - rabbitmq.service.yaml
   - secret.yaml
+  - static.pv.yaml
+  - static.pvc.yaml

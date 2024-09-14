@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: taiga-back
+spec:
+  ports:
+    - port: 8000
+      targetPort: 8000
+  selector:
+    app: taiga-back

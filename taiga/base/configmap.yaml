@@ -1,31 +1,20 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  labels:
-    app: taiga
-  name: taiga-env
+  name: taiga-config
 data:
-  DEFAULT_FROM_EMAIL: ''
-  EMAIL_HOST_USER: ''
-  EMAIL_PORT: '587'
-  EMAIL_USE_SSL: 'false'
-  EMAIL_USE_TLS: 'true'
-  EMAIL_BACKEND: django.core.mail.backends..EmailBackend
-  EMAIL_HOST: ''
-  ENABLE_TELEMETRY: ''
-  MAX_AGE: '360'
-  POSTGRES_USER: taiga
-  POSTGRES_DB: taiga
-  POSTGRES_HOST: taiga-db.devops.svc.cluster.local
-  RABBITMQ_USER: taiga
-  RABBITMQ_DEFAULT_USER: taiga
-  RABBITMQ_DEFAULT_VHOST: taiga
-  SUBPATH: ''
-  TAIGA_SCHEME: https
-  TAIGA_DOMAIN: localhost:9000
-  TAIGA_URL: ://
-  TAIGA_WEBSOCKETS_URL: ://
-  TAIGA_SITES_DOMAIN: ''
-  TAIGA_SITES_SCHEME: ''
+  POSTGRES_DB: 'taiga'
+  POSTGRES_USER: 'taiga_user'
+  POSTGRES_HOST: 'taiga-postgresql'
+  TAIGA_SITES_SCHEME: 'https'
+  TAIGA_SITES_DOMAIN: 'localhost'
   TAIGA_SUBPATH: ''
-  WEBSOCKETS_SCHEME: ws
+  RABBITMQ_USER: 'rabbitmq_user'
+  EMAIL_BACKEND: 'console'
+  EMAIL_USE_TLS: 'false'
+  EMAIL_USE_SSL: 'false'
+  EMAIL_HOST: 'localhost'
+  EMAIL_PORT: '1025'
+  EMAIL_HOST_USER: ''
+  EMAIL_DEFAULT_FROM: 'noreply@example.com'
+  ENABLE_TELEMETRY: 'false'

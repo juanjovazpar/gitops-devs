@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taiga-postgresql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taiga-postgresql
+  template:
+    metadata:
+      labels:
+        app: taiga-postgresql
+    spec:
+      containers:
+        - name: postgresql
+          image: postgres:12.3
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secrets
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - name: postgresql-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgresql-storage
+          persistentVolumeClaim:
+            claimName: taiga-postgresql-pvc
