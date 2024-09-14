@@ -1,25 +1,25 @@
 resources:
-  - async/async.service.yaml
-  - async/async.pv.yaml
-  - async/async.pvc.yaml
-  - back/back.deploy.yaml
-  - back/back.service.yaml
-  - db/postgresql.deploy.yaml
-  - db/postgresql.pv.yaml
-  - db/postgresql.pvc.yaml
-  - db/postgresql.service.yaml
-  - events/events.deploy.yaml
-  - front/front.deploy.yaml
-  - front/front.service.yaml
-  - media/media.pv.yaml
-  - media/media.pvc.yaml
-  - rabbitmq-async/rabbitmq-async.deploy.yaml
-  - rabbitmq-async/rabbitmq-async.pv.yaml
-  - rabbitmq-async/rabbitmq-async.pvc.yaml
-  - rabbitmq-async/rabbitmq-async.service.yaml
-  - rabbitmq-events/rabbitmq-events.deploy.yaml
-  - rabbitmq-events/rabbitmq-events.pv.yaml
-  - rabbitmq-events/rabbitmq-events.pvc.yaml
-  - rabbitmq-events/rabbitmq-events.service.yaml
+  - ./async/async.service.yaml
+  - ./async/async.pv.yaml
+  - ./async/async.pvc.yaml
+  - ./back/back.deploy.yaml
+  - ./back/back.service.yaml
+  - ./db/postgresql.deploy.yaml
+  - ./db/postgresql.pv.yaml
+  - ./db/postgresql.pvc.yaml
+  - ./db/postgresql.service.yaml
+  - ./events/events.deploy.yaml
+  - ./front/front.deploy.yaml
+  - ./front/front.service.yaml
+  - ./media/media.pv.yaml
+  - ./media/media.pvc.yaml
+  - ./rabbitmq-async/rabbitmq-async.deploy.yaml
+  - ./rabbitmq-async/rabbitmq-async.pv.yaml
+  - ./rabbitmq-async/rabbitmq-async.pvc.yaml
+  - ./rabbitmq-async/rabbitmq-async.service.yaml
+  - ./rabbitmq-events/rabbitmq-events.deploy.yaml
+  - ./rabbitmq-events/rabbitmq-events.pv.yaml
+  - ./rabbitmq-events/rabbitmq-events.pvc.yaml
+  - ./rabbitmq-events/rabbitmq-events.service.yaml
   - secret.yaml
   - configmap.yaml
