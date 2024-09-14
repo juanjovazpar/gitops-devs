@@ -1,7 +1,5 @@
 resources:
   - async.service.yaml
-  - async.pv.yaml
-  - async.pvc.yaml
   - back.deploy.yaml
   - back.service.yaml
   - postgresql.deploy.yaml
