@@ -42,12 +42,9 @@ spec:
           args:
             - >
               psql -U postgres -c "CREATE ROLE postgres LOGIN SUPERUSER PASSWORD '${POSTGRES_PASSWORD}'";
-          env:
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: taiga-config
-                  key: POSTGRES_PASSWORD
+          envFrom:
+            - secretRef:
+                name: taiga-secrets
       volumes:
         - name: postgresql-storage
           persistentVolumeClaim:
