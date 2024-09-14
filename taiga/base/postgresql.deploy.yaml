@@ -46,7 +46,7 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: POSTGRES_PASSWORD
+                  name: taiga-config
                   key: POSTGRES_PASSWORD
       volumes:
         - name: postgresql-storage
