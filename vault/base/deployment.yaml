@@ -15,9 +15,9 @@ spec:
       containers:
         - name: vault
           image: hashicorp/vault:latest
+          command: ['vault', 'server', '-config=/vault/config/vault.hcl']
           ports:
             - containerPort: 8200
-          command: ['vault', 'server', '-config=/vault/config/vault.hcl']
           volumeMounts:
             - name: vault-config
               mountPath: /vault/config
