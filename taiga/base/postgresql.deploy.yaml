@@ -17,11 +17,13 @@ spec:
           image: postgres:12.20
           ports:
             - containerPort: 5432
-          envFrom:
-            - configMapRef:
-                name: taiga-config
-            - secretRef:
-                name: taiga-secrets
+          env:
+            - name: POSTGRES_DB
+              value: taiga
+            - name: POSTGRES_USER
+              value: taiga
+            - name: POSTGRES_PASSWORD
+              value: YlZBOWlCTE1lMnQzcHJSOFZtUw==
           volumeMounts:
             - name: postgresql-storage
               mountPath: /var/lib/postgresql/data
