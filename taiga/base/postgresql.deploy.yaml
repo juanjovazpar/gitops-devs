@@ -12,24 +12,6 @@ spec:
       labels:
         app: taiga-postgresql
     spec:
-      initContainers:
-        - name: init-postgresql
-          image: postgres:12.3
-          command: ['/bin/sh', '-c']
-          args:
-            - >
-              if [ ! -d "$PGDATA" ]; then
-                echo "Initializing database...";
-                initdb -D "$PGDATA";
-              else
-                echo "Database already initialized.";
-              fi
-          env:
-            - name: PGDATA
-              value: /var/lib/postgresql/data
-          volumeMounts:
-            - name: postgresql-storage
-              mountPath: /var/lib/postgresql/data
       containers:
         - name: postgresql
           image: postgres:12.3
@@ -53,8 +35,6 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 5
-          securityContext:
-            runAsUser: 999
       volumes:
         - name: postgresql-storage
           persistentVolumeClaim:
