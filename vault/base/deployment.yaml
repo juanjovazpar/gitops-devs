@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vault
+  template:
+    metadata:
+      labels:
+        app: vault
+    spec:
+      containers:
+        - name: vault
+          image: hashicorp/vault:latest
+          ports:
+            - containerPort: 8200
+          command: ['vault', 'server', '-config=/vault/config/vault.hcl']
+          volumeMounts:
+            - name: vault-config
+              mountPath: /vault/config
+              subPath: vault.hcl
+            - name: vault-data
+              mountPath: /vault/file
+      volumes:
+        - name: vault-config
+          configMap:
+            name: vault-config
+        - name: vault-data
+          persistentVolumeClaim:
+            claimName: vault-pvc
