@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: vault-svc
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: vault
   ports:
-    - protocol: TCP
-      port: 8200
+    - port: 80
       targetPort: 8200
+      nodePort: 30000
