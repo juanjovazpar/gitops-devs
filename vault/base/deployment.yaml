@@ -19,11 +19,11 @@ spec:
           ports:
             - containerPort: 8200
           volumeMounts:
-            - name: vault-config
-              mountPath: /vault/config
+            - mountPath: /vault/config/vault.hcl
+              name: vault-config
               subPath: vault.hcl
-            - name: vault-data
-              mountPath: /vault/file
+            - mountPath: /vault/file
+              name: vault-data
       volumes:
         - name: vault-config
           configMap:

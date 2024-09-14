@@ -7,15 +7,12 @@ data:
     storage "file" {
       path = "/vault/file"
     }
-
     ui = true
-
     audit "file" {
       file_path = "/vault/logs/audit.log"
     }
-
     auth "kubernetes" {}
-
     secrets "kv" {
       path = "secret/"
     }
+    disable_mlock = true
