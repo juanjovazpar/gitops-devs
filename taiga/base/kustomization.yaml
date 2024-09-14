@@ -19,5 +19,7 @@ resources:
   - rabbitmq-events.pv.yaml
   - rabbitmq-events.pvc.yaml
   - rabbitmq-events.service.yaml
+  - statics.pv.yaml
+  - statics.pvc.yaml
   - secret.yaml
   - configmap.yaml
