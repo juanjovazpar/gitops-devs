@@ -4,7 +4,6 @@ resources:
   - configmap.yaml
   - front.deploy.yaml
   - front.service.yaml
-  - kustomization.yaml
   - media.pv.yaml
   - media.pvc.yaml
   - postgresql.deploy.yaml
