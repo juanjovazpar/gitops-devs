@@ -27,6 +27,14 @@ spec:
               mountPath: /taiga-back/static
             - name: media-storage
               mountPath: /taiga-back/media
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
       volumes:
         - name: static-storage
           persistentVolumeClaim:

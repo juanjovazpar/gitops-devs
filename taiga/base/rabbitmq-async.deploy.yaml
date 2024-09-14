@@ -23,22 +23,6 @@ spec:
                 name: taiga-config
             - secretRef:
                 name: taiga-secrets
-          env:
-            - name: RABBITMQ_DEFAULT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: taiga-config
-                  key: RABBITMQ_USER
-            - name: RABBITMQ_DEFAULT_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: taiga-secrets
-                  key: RABBITMQ_PASS
-            - name: RABBITMQ_DEFAULT_VHOST
-              valueFrom:
-                secretKeyRef:
-                  name: taiga-config
-                  key: RABBITMQ_VHOST
           volumeMounts:
             - name: rabbitmq-data
               mountPath: /var/lib/rabbitmq

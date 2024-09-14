@@ -22,9 +22,3 @@ spec:
                 name: taiga-config
             - secretRef:
                 name: taiga-secrets
-          env:
-            - name: TAIGA_SECRET_KEY
-              valueFrom:
-                configMapKeyRef:
-                  name: taiga-config
-                  key: SECRET_KEY
