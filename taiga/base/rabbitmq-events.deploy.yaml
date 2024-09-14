@@ -23,30 +23,16 @@ spec:
                 name: taiga-config
             - secretRef:
                 name: taiga-secrets
-          env:
-            - name: RABBITMQ_DEFAULT_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: taiga-config
-                  key: RABBITMQ_USER
-            - name: RABBITMQ_DEFAULT_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: taiga-secrets
-                  key: RABBITMQ_PASS
-            - name: RABBITMQ_ERLANG_COOKIE
-              valueFrom:
-                secretKeyRef:
-                  name: taiga-secrets
-                  key: RABBITMQ_ERLANG_COOKIE
-            - name: RABBITMQ_DEFAULT_VHOST
-              valueFrom:
-                secretKeyRef:
-                  name: taiga-secrets
-                  key: RABBITMQ_VHOST
           volumeMounts:
             - name: rabbitmq-data
               mountPath: /var/lib/rabbitmq
+          livenessProbe:
+            tcpSocket:
+              port: 5672
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
       volumes:
         - name: rabbitmq-data
           persistentVolumeClaim:
