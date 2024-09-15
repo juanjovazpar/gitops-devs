@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/OAKDEW/gitops-devs'
-    path: overlays/dev
+    path: base
     targetRevision: master
   destination:
     server: 'https://kubernetes.default.svc'
