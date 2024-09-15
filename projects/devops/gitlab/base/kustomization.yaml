@@ -1,0 +1,6 @@
+helmCharts:
+  - name: gitlab
+    repo: https://charts.gitlab.io
+    chart: gitlab
+    version: 6.9.0
+    valuesFile: values.yaml

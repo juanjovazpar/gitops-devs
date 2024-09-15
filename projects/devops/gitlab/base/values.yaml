@@ -1,0 +1,13 @@
+global:
+  edition: ce
+  hosts:
+    domain: gitlab.example.com
+  ingress:
+    tls:
+      enabled: false
+gitlab:
+  webservice:
+    minReplicas: 1
+    maxReplicas: 2
+  redis:
+    password: 'defaultpassword'

@@ -1,0 +1,14 @@
+global:
+  ingress:
+    tls:
+      enabled: true
+      secretName: gitlab-tls
+gitlab:
+  webservice:
+    minReplicas: 1
+    maxReplicas: 2
+  redis:
+    password:
+      secret:
+        name: gitlab-secrets
+        key: redis-password
