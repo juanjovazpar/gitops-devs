@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gitlab-config
+  namespace: gitlab
+data:
+  tets: test
