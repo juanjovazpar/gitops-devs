@@ -1,6 +1,7 @@
 resources:
-  - configmap.yaml
+  - crd.yaml
   - deployment.yaml
-  - gitlab-pvc.yaml
-  - secret.yaml
+  - pvc.yaml
+  - rbac.yaml
+  - service-account.yaml
   - service.yaml
