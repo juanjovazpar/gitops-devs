@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sealed-secrets-controller
+  namespace: sealed-secrets
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sealed-secrets
+  template:
+    metadata:
+      labels:
+        app: sealed-secrets
+    spec:
+      serviceAccountName: sealed-secrets-controller
+      containers:
+        - name: sealed-secrets
+          image: quay.io/bitnami/sealed-secrets-controller:latest
+          ports:
+            - containerPort: 8080
+          args:
+            - '--key-renew-period=0' # Period to rotate secrets
