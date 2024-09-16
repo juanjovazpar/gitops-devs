@@ -3,5 +3,5 @@ resources:
 
 namePrefix: prod-
 
-patchesStrategicMerge:
-  - values/value.yaml
+patches:
+  - path: values/value.yaml
