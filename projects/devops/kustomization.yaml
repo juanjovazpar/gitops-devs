@@ -1,3 +1,5 @@
 resources:
-  - ./gitlab/application.yaml
-  - ./gitlab/namespace.yaml
+  - ./gitlab/base
+  - ./nginx-ingress/base
+  - ./sealed-secrets/base
+  - ./taiga/base
