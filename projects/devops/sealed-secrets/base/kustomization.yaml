@@ -3,5 +3,4 @@ resources:
   - deployment.yaml
   - pvc.yaml
   - rbac.yaml
-  - service-account.yaml
   - service.yaml
