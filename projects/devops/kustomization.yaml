@@ -1,0 +1,3 @@
+resources:
+  - gitlab/application.yaml
+  - gitlab/namespace.yaml

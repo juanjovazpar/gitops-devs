@@ -1,0 +1,7 @@
+resources:
+  - configmap.yaml
+  - deployment.yaml
+  - gitlab-pvc.yaml
+  - secret.yaml
+  - service.yaml
+  - storage-class.yaml
