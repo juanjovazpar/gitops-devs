@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taiga
+  namespace: taiga
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taiga
+  template:
+    metadata:
+      labels:
+        app: taiga
+    spec:
+      containers:
+        - name: taiga
+          image: taigaio/taiga-back:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_DB_NAME
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_DB_USER
+            - name: ALLOWED_HOSTS
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_ALLOWED_HOSTS
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: TAIGA_DB_PASSWORD
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: TAIGA_SECRET_KEY
+      volumes:
+        - name: taiga-data
+          persistentVolumeClaim:
+            claimName: taiga-pvc
