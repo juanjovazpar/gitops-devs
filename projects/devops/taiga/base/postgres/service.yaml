@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres
+  name: taiga-postgresql
   namespace: taiga
 spec:
   selector:
