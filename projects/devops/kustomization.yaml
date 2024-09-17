@@ -1,7 +1,5 @@
-namePrefix: prod-
-
 namespace: devops
 
 resources:
-  - ../../applications/gilab/prod
-  - ../../applications/taiga/prod
+  - ./applications/gilab/prod
+  - ./applications/taiga/prod
