@@ -3,7 +3,4 @@ namespace: devops
 resources:
   - ./nfs
   - ./project.yaml
-  - ./applications/gitlab/prod
-  - ./applications/nginx-ingress/prod
-  - ./applications/sealed-secrets/prod
-  - ./applications/taiga/prod
+  - ./applications.yaml
