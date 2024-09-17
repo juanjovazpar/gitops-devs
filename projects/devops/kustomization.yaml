@@ -1,7 +1,0 @@
-namespace: devops
-
-resources:
-  - ../../applications/gitlab/base
-  - ../../applications/nginx-ingress/base
-  - ../../applications/sealed-secrets/base
-  - ../../applications/taiga/base
