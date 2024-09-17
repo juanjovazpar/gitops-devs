@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sealed-secrets-controller
-  namespace: sealed-secrets
 spec:
   replicas: 1
   selector:
