@@ -3,5 +3,3 @@ resources:
   - ./nginx-ingress/base
   - ./sealed-secrets/base
   - ./taiga/base
-
-namespace: develop

@@ -1,0 +1,7 @@
+namePrefix: prod-
+
+resources:
+  - ../../base
+
+patchesStrategicMerge:
+  - ./patches/application.yaml
