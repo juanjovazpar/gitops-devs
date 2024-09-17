@@ -1,7 +1,0 @@
-namespace: devops
-
-resources:
-  - ./applications/gitlab/prod
-  - ./applications/nginx-ingress/prod
-  - ./applications/sealed-secrets/prod
-  - ./applications/taiga/prod
