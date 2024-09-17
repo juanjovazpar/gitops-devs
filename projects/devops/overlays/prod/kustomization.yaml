@@ -1,5 +1,7 @@
 namePrefix: prod-
 
+namespace: devops
+
 resources:
   - ../../base
 
