@@ -1,5 +1,0 @@
-resources:
-  - ./gitlab/base
-  - ./nginx-ingress/base
-  - ./sealed-secrets/base
-  - ./taiga/base

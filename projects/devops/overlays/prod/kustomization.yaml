@@ -1,9 +1,0 @@
-namePrefix: prod-
-
-namespace: devops
-
-resources:
-  - ../../base
-
-patchesStrategicMerge:
-  - ./patches/application.yaml
