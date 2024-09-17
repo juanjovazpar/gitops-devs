@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Project
+metadata:
+  name: devops
+  namespace: argocd
+spec:
+  description: 'Development Operations project to setup OAKDEW CI/CD pipeline'
+  sourceRepos:
+    - 'https://github.com/OAKDEW/gitops-devs'
+  destinations:
+    - server: 'https://kubernetes.default.svc'
+      namespace: 'devops'

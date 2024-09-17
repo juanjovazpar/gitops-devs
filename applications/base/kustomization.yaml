@@ -1,6 +1,0 @@
-resources:
-  - configmap.yaml
-  - deployment.yaml
-  - persistent-volume-claim.yaml
-  - persistent-volume.yaml
-  - service.yaml

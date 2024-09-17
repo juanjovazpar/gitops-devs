@@ -1,0 +1,83 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Project
+metadata:
+  name: devops
+  namespace: argocd
+spec:
+  description: "Development Operations project to setup OAKDEW CI/CD pipeline"
+  sourceRepos:
+    - 'https://github.com/OAKDEW/gitops-devs'
+  
+  destinations:
+    - server: 'https://kubernetes.default.svc'
+      namespace: 'devops'
+  
+  # Recursos de clúster permitidos que pueden ser gestionados por aplicaciones en este proyecto
+  clusterResourceWhitelist:
+    - group: 'apps'
+      kind: 'Deployment'
+    - group: 'batch'
+      kind: 'Job'
+    - group: 'networking.k8s.io'
+      kind: 'Ingress'
+    - group: '*'
+      kind: '*'
+  
+  # Recursos de clúster que están prohibidos para las aplicaciones en este proyecto
+  clusterResourceBlacklist:
+    - group: 'storage.k8s.io'
+      kind: 'StorageClass'
+  
+  # Proyectos secundarios a los que se les permite gestionar aplicaciones
+  roles:
+    - name: admin
+      policies:
+        - 'p, proj:my-project:admin, applications, *, my-project/*, allow'
+        - 'p, proj:my-project:admin, projects, *, *, allow'
+    - name: viewer
+      policies:
+        - 'p, proj:my-project:viewer, applications, get, my-project/*, allow'
+
+  # Políticas de sincronización para las aplicaciones
+  syncWindows:
+    - kind: allow
+      schedule: '0 1 * * *'
+      duration: 1h
+      applications:
+        - '*'
+
+  # Políticas de recursos para los grupos de aplicaciones
+  resourceWhitelist:
+    - group: '*'
+      kind: '*'
+
+  # Políticas de permisos para recursos
+  resourceBlacklist:
+    - group: 'batch'
+      kind: 'CronJob'
+    
+  # Políticas de sincronización y despliegue
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 2m
+    hook:
+      force: false
+    validation:
+      enabled: true
+
+  # Control de acceso y permisos
+  roles:
+    - name: admin
+      policies:
+        - 'p, proj:my-project:admin, applications, *, my-project/*, allow'
+        - 'p, proj:my-project:admin, projects, *, *, allow'
+    - name: viewer
+      policies:
+        - 'p, proj:my-project:viewer, applications, get, my-project/*, allow'

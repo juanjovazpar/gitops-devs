@@ -1,3 +1,7 @@
 resources:
+  - configmap.yaml
   - deployment.yaml
+  - pvc.yaml
+  - secret.yaml
   - service.yaml
+  - ingress.yaml

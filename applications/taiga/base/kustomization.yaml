@@ -1,25 +1,3 @@
 resources:
-  - async.deploy.yaml
-  - back.deploy.yaml
-  - back.service.yaml
-  - postgresql.deploy.yaml
-  - postgresql.pv.yaml
-  - postgresql.pvc.yaml
-  - postgresql.service.yaml
-  - events.deploy.yaml
-  - front.deploy.yaml
-  - front.service.yaml
-  - media.pv.yaml
-  - media.pvc.yaml
-  - rabbitmq-async.deploy.yaml
-  - rabbitmq-async.pv.yaml
-  - rabbitmq-async.pvc.yaml
-  - rabbitmq-async.service.yaml
-  - rabbitmq-events.deploy.yaml
-  - rabbitmq-events.pv.yaml
-  - rabbitmq-events.pvc.yaml
-  - rabbitmq-events.service.yaml
-  - static.pv.yaml
-  - static.pvc.yaml
-  - secret.yaml
-  - configmap.yaml
+  - ./taiga
+  - ./postgres
