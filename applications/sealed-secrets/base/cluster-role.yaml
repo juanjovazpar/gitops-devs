@@ -3,6 +3,6 @@ kind: ClusterRole
 metadata:
   name: sealed-secrets-controller
 rules:
-  - apiGroups: ['']
-    resources: ['secrets']
+  - apiGroups: ['bitnami.com']
+    resources: ['sealedsecrets']
     verbs: ['get', 'list', 'watch', 'create', 'update', 'delete']
