@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: taiga-config
 data:
-  TAIGA_DB_NAME: 'taiga'
-  TAIGA_DB_USER: 'taiga_user'
-  TAIGA_ALLOWED_HOSTS: 'taiga.yourdomain.com'
-  TAIGA_DB_HOST: 'taiga-postgresql'
+  TAIGA_DB_NAME: taiga
+  TAIGA_DB_USER: taiga_user
+  TAIGA_ALLOWED_HOSTS: taiga.yourdomain.com
+  TAIGA_DB_HOST: taiga-postgresql
   TAIGA_DB_PORT: '5432'
