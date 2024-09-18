@@ -39,6 +39,11 @@ spec:
                 secretKeyRef:
                   name: taiga-secret
                   key: POSTGRES_PASSWORD
+            - name: TAIGA_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: SECRET_KEY
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
