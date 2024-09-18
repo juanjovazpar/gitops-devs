@@ -19,22 +19,27 @@ spec:
           ports:
             - containerPort: 8000
           env:
-            - name: DB_NAME
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_DB_HOST
+            - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
                   name: taiga-config
                   key: TAIGA_DB_NAME
-            - name: DB_USER
+            - name: POSTGRES_USER
               valueFrom:
                 configMapKeyRef:
                   name: taiga-config
                   key: TAIGA_DB_USER
-            - name: ALLOWED_HOSTS
+            - name: TAIGA_ALLOWED_HOSTS
               valueFrom:
                 configMapKeyRef:
                   name: taiga-config
                   key: TAIGA_ALLOWED_HOSTS
-            - name: DB_PASSWORD
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: taiga-secret
