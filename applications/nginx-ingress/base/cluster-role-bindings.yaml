@@ -19,7 +19,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: nginx-ingress-secrets-access
+  name: nginx-ingress-clusterrole
 subjects:
   - kind: ServiceAccount
     name: nginx-ingress-serviceaccount

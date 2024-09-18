@@ -14,8 +14,14 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: nginx-ingress-secrets-access
+  name: nginx-ingress-clusterrole
 rules:
   - apiGroups: ['']
-    resources: ['secrets']
+    resources: ['secrets', 'services', 'configmaps']
     verbs: ['get', 'list', 'watch']
+  - apiGroups: ['discovery.k8s.io']
+    resources: ['endpointslices']
+    verbs: ['get', 'list', 'watch']
+  - apiGroups: ['']
+    resources: ['nodes']
+    verbs: ['get']
