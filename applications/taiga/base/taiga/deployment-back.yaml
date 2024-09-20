@@ -1,20 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: taiga
-  namespace: devops
+  name: taiga-back
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: taiga
+      app: taiga-back
   template:
     metadata:
       labels:
-        app: taiga
+        app: taiga-back
     spec:
       containers:
-        - name: taiga
+        - name: taiga-back
           image: taigaio/taiga-back:latest
           ports:
             - containerPort: 8000
@@ -54,7 +53,22 @@ spec:
                 secretKeyRef:
                   name: taiga-secret
                   key: SECRET_KEY
+          resources:
+            requests:
+              memory: '256Mi'
+              cpu: '500m'
+            limits:
+              memory: '512Mi'
+              cpu: '1000m'
+          volumeMounts:
+            - name: taiga-static-data
+              mountPath: /taiga-back/static
+            - name: taiga-media-data
+              mountPath: /taiga-back/media
       volumes:
-        - name: taiga-data
+        - name: taiga-static-data
           persistentVolumeClaim:
-            claimName: taiga-pvc
+            claimName: taiga-static-data-pvc
+        - name: taiga-media-data
+          persistentVolumeClaim:
+            claimName: taiga-media-data-pvc
