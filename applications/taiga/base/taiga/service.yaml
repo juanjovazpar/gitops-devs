@@ -3,11 +3,13 @@ kind: Service
 metadata:
   name: taiga-back
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: taiga-back
   ports:
-    - port: 80
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
 
 ---
 apiVersion: v1
