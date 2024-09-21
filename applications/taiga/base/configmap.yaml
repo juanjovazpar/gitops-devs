@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: taiga-config
+data:
+  TAIGA_DB_NAME: taiga
+  TAIGA_DB_USER: taiga
+  TAIGA_ALLOWED_HOSTS: taiga.yourdomain.com
+  TAIGA_DB_HOST: taiga-db
+  TAIGA_DB_PORT: '5432'
+  RABBITMQ_USER: taiga
+  RABBITMQ_VHOST: taiga
+  TAIGA_SITES_SCHEME: https
+  TAIGA_SITES_DOMAIN: 192.168.1.231:30000
+  TAIGA_URL: http://192.168.1.231:30000
+  TAIGA_SUBPATH: ''
+  TAIGA_WEBSOCKETS_URL: ws://192.168.1.231:30000
+  ATTACHMENTS_MAX_AGE: '360'
+  taiga.conf: |
+    server {
+        listen 80;
+    location /api/ {
+        proxy_pass http://taiga-back;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location / {
+        proxy_pass http://taiga-front;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    }

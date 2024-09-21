@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taiga-events
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taiga-events
+  template:
+    metadata:
+      labels:
+        app: taiga-events
+    spec:
+      restartPolicy: Always
+      initContainers:
+        - name: wait-for-taiga-events-rabbitmq
+          image: busybox
+          command:
+            [
+              'sh',
+              '-c',
+              'until nc -z taiga-events-rabbitmq 5672; do sleep 2; done',
+            ]
+      containers:
+        - name: taiga-events
+          image: taigaio/taiga-events:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: RABBITMQ_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: RABBITMQ_USER
+            - name: RABBITMQ_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: RABBITMQ_PASS
+            - name: TAIGA_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: SECRET_KEY
+          resources:
+            requests:
+              memory: '256Mi'
+              cpu: '250m'
+            limits:
+              memory: '512Mi'
+              cpu: '500m'

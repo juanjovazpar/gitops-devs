@@ -1,3 +1,14 @@
 resources:
-  - ./taiga
-  - ./postgres
+  - ./configmap.yaml
+  - ./deployment-async-rabbitmq.yaml
+  - ./deployment-async.yaml
+  - ./deployment-back.yaml
+  - ./deployment-db.yaml
+  - ./deployment-events-rabbitmq.yaml
+  - ./deployment-events.yaml
+  - ./deployment-front.yaml
+  - ./deployment-protected.yaml
+  - ./deployment-gateway.yaml
+  - ./pvc.yaml
+  - ./secret.yaml
+  - ./service.yaml

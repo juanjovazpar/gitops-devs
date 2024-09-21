@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taiga-async-rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taiga-async-rabbitmq
+  template:
+    metadata:
+      labels:
+        app: taiga-async-rabbitmq
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: taiga-async-rabbitmq
+          image: rabbitmq:3.8-management-alpine
+          ports:
+            - containerPort: 5672
+            - containerPort: 15672
+          env:
+            - name: RABBITMQ_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: RABBITMQ_USER
+            - name: RABBITMQ_DEFAULT_VHOST
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: RABBITMQ_VHOST
+            - name: RABBITMQ_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: RABBITMQ_PASS
+            - name: RABBITMQ_ERLANG_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: RABBITMQ_ERLANG_COOKIE
+          resources:
+            requests:
+              memory: '256Mi'
+              cpu: '500m'
+            limits:
+              memory: '512Mi'
+              cpu: '1000m'
+          volumeMounts:
+            - name: taiga-async-rabbitmq-data
+              mountPath: taiga-async-rabbitmq-data:/var/lib/rabbitmq
+      volumes:
+        - name: taiga-async-rabbitmq-data
+          persistentVolumeClaim:
+            claimName: taiga-async-rabbitmq-data-pvc

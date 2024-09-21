@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taiga-protected
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taiga-protected
+  template:
+    metadata:
+      labels:
+        app: taiga-protected
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: taiga-protected
+          image: taigaio/taiga-protected:latest
+          env:
+            - name: MAX_AGE
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: ATTACHMENTS_MAX_AGE
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: SECRET_KEY
+          resources:
+            requests:
+              memory: '256Mi'
+              cpu: '250m'
+            limits:
+              memory: '512Mi'
+              cpu: '500m'

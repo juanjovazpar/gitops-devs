@@ -1,7 +1,0 @@
-resources:
-  - ./configmap.yaml
-  - ./deployment-front.yaml
-  - ./deployment-back.yaml
-  - ./pvc.yaml
-  - ./secret.yaml
-  - ./service.yaml

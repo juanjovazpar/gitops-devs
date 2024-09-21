@@ -12,6 +12,7 @@ spec:
       labels:
         app: taiga-db
     spec:
+      restartPolicy: Always
       containers:
         - name: taiga-db
           image: postgres:13.16

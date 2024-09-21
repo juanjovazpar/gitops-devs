@@ -1,0 +1,120 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taiga-back
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taiga-back
+  template:
+    metadata:
+      labels:
+        app: taiga-back
+    spec:
+      restartPolicy: Always
+      initContainers:
+        - name: wait-for-taiga-db
+          image: busybox
+          command: ['sh', '-c', 'until nc -z taiga-db 5432; do sleep 2; done']
+        - name: wait-for-taiga-events-rabbitmq
+          image: busybox
+          command:
+            [
+              'sh',
+              '-c',
+              'until nc -z taiga-events-rabbitmq 5672; do sleep 2; done',
+            ]
+        - name: wait-for-taiga-async-rabbitmq
+          image: busybox
+          command:
+            [
+              'sh',
+              '-c',
+              'until nc -z taiga-async-rabbitmq 5672; do sleep 2; done',
+            ]
+      containers:
+        - name: taiga-back
+          image: taigaio/taiga-back:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_DB_USER
+            - name: RABBITMQ_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: RABBITMQ_USER
+            - name: TAIGA_SITES_SCHEME
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_SITES_SCHEME
+            - name: TAIGA_SITES_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_SITES_DOMAIN
+            - name: TAIGA_SUBPATH
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_SUBPATH
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_DB_HOST
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_DB_NAME
+            - name: TAIGA_ALLOWED_HOSTS
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_ALLOWED_HOSTS
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: POSTGRES_PASSWORD
+            - name: RABBITMQ_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: RABBITMQ_PASS
+            - name: TAIGA_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: SECRET_KEY
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: SECRET_KEY
+          resources:
+            requests:
+              memory: '256Mi'
+              cpu: '500m'
+            limits:
+              memory: '512Mi'
+              cpu: '1000m'
+          volumeMounts:
+            - name: taiga-static-data
+              mountPath: /taiga-back/static
+            - name: taiga-media-data
+              mountPath: /taiga-back/media
+      volumes:
+        - name: taiga-static-data
+          persistentVolumeClaim:
+            claimName: taiga-static-data-pvc
+        - name: taiga-media-data
+          persistentVolumeClaim:
+            claimName: taiga-media-data-pvc
