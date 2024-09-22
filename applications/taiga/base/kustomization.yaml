@@ -12,3 +12,4 @@ resources:
   - ./pvc.yaml
   - ./secret.yaml
   - ./service.yaml
+  - ./job.yaml

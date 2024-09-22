@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: set-rabbitmq-cookie
+spec:
+  template:
+    spec:
+      containers:
+        - name: rabbitmq-cookie-setter
+          image: rabbitmq:3.8-management-alpine
+          env:
+            - name: RABBITMQ_ERLANG_COOKIE
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: RABBITMQ_ERLANG_COOKIE
+          command: ['/bin/sh', '-c']
+          args:
+            - |
+              echo $RABBITMQ_ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie;
+              chmod 400 /var/lib/rabbitmq/.erlang.cookie;
+              chown rabbitmq:rabbitmq /var/lib/rabbitmq/.erlang.cookie;
+          volumeMounts:
+            - name: taiga-async-rabbitmq-data
+              mountPath: /var/lib/rabbitmq
+      volumes:
+        - name: taiga-async-rabbitmq-data
+          persistentVolumeClaim:
+            claimName: taiga-async-rabbitmq-data-pvc
+      restartPolicy: OnFailure

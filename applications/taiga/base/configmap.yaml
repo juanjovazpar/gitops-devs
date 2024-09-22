@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: taiga-config
 data:
+  TAIGA_ADMIN_USERNAME: admin
   TAIGA_DB_NAME: taiga
   TAIGA_DB_USER: taiga
   TAIGA_ALLOWED_HOSTS: taiga.yourdomain.com
@@ -19,19 +20,19 @@ data:
   taiga.conf: |
     server {
         listen 80;
-    location /api/ {
-        proxy_pass http://taiga-back;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
+        location /api/ {
+            proxy_pass http://taiga-back;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
 
-    location / {
-        proxy_pass http://taiga-front;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
+        location / {
+            proxy_pass http://taiga-front;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
     }

@@ -20,7 +20,7 @@ spec:
             - containerPort: 5672
             - containerPort: 15672
           env:
-            - name: RABBITMQ_USER
+            - name: RABBITMQ_DEFAULT_USER
               valueFrom:
                 configMapKeyRef:
                   name: taiga-config
@@ -30,16 +30,11 @@ spec:
                 configMapKeyRef:
                   name: taiga-config
                   key: RABBITMQ_VHOST
-            - name: RABBITMQ_PASS
+            - name: RABBITMQ_DEFAULT_PASS
               valueFrom:
                 secretKeyRef:
                   name: taiga-secret
                   key: RABBITMQ_PASS
-            - name: RABBITMQ_ERLANG_COOKIE
-              valueFrom:
-                secretKeyRef:
-                  name: taiga-secret
-                  key: RABBITMQ_ERLANG_COOKIE
           resources:
             requests:
               memory: '256Mi'

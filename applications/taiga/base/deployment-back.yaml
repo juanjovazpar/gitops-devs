@@ -33,6 +33,68 @@ spec:
               '-c',
               'until nc -z taiga-async-rabbitmq 5672; do sleep 2; done',
             ]
+        - name: create-superuser
+          image: taigaio/taiga-back:latest
+          command: ['/bin/bash', '-c']
+          args:
+            - |
+              python manage.py migrate --noinput && \
+              python manage.py shell -c "
+              import os
+              from django.contrib.auth import get_user_model
+              User = get_user_model()
+
+              username = os.getenv('TAIGA_ADMIN_USERNAME')
+              email = os.getenv('TAIGA_ADMIN_EMAIL')
+              password = os.getenv('TAIGA_ADMIN_PASSWORD')
+
+              if not User.objects.filter(username=username).exists():
+                  User.objects.create_superuser(username=username, email=email, password=password)
+                  print(f'Superuser {username} creado.')
+              else:
+                  print(f'El superuser {username} ya existe.')
+              "
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_DB_USER
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_DB_HOST
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_DB_NAME
+            - name: TAIGA_ADMIN_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_ADMIN_USERNAME
+            - name: TAIGA_ADMIN_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: TAIGA_ADMIN_EMAIL
+            - name: TAIGA_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: TAIGA_ADMIN_PASSWORD
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: POSTGRES_PASSWORD
+            - name: TAIGA_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: SECRET_KEY
       containers:
         - name: taiga-back
           image: taigaio/taiga-back:latest
@@ -79,6 +141,21 @@ spec:
                 configMapKeyRef:
                   name: taiga-config
                   key: TAIGA_ALLOWED_HOSTS
+            - name: TAIGA_ADMIN_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: TAIGA_ADMIN_USERNAME
+            - name: TAIGA_ADMIN_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: TAIGA_ADMIN_EMAIL
+            - name: TAIGA_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: TAIGA_ADMIN_PASSWORD
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:

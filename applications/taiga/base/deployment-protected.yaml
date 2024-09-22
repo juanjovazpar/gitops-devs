@@ -16,6 +16,8 @@ spec:
       containers:
         - name: taiga-protected
           image: taigaio/taiga-protected:latest
+          ports:
+            - containerPort: 8003
           env:
             - name: MAX_AGE
               valueFrom:
