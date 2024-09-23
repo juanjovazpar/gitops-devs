@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: taiga-back
 spec:
-  type: NodePort
   selector:
     app: taiga-back
   ports:
@@ -22,7 +21,6 @@ spec:
   ports:
     - protocol: TCP
       port: 5432
-  type: ClusterIP
 
 ---
 apiVersion: v1
@@ -30,7 +28,6 @@ kind: Service
 metadata:
   name: taiga-front
 spec:
-  type: NodePort
   selector:
     app: taiga-front
   ports:
@@ -44,7 +41,6 @@ kind: Service
 metadata:
   name: taiga-async
 spec:
-  type: NodePort
   selector:
     app: taiga-async
   ports:
@@ -94,13 +90,12 @@ kind: Service
 metadata:
   name: taiga-gateway
 spec:
-  type: NodePort
-  ports:
-    - port: 80
-      targetPort: 80
-      nodePort: 30000
   selector:
     app: taiga-gateway
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
 
 ---
 apiVersion: v1

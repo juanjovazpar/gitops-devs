@@ -12,10 +12,10 @@ data:
   RABBITMQ_USER: taiga
   RABBITMQ_VHOST: taiga
   TAIGA_SITES_SCHEME: https
-  TAIGA_SITES_DOMAIN: 192.168.1.231:30000
-  TAIGA_URL: http://192.168.1.231:30000
+  TAIGA_SITES_DOMAIN: taiga.oakdew.local/
+  TAIGA_URL: http://taiga.oakdew.local/
   TAIGA_SUBPATH: ''
-  TAIGA_WEBSOCKETS_URL: ws://192.168.1.231:30000
+  TAIGA_WEBSOCKETS_URL: ws://taiga.oakdew.local/
   ATTACHMENTS_MAX_AGE: '360'
   taiga.conf: |
     server {

@@ -13,3 +13,4 @@ resources:
   - ./secret.yaml
   - ./service.yaml
   - ./job.yaml
+  - ./ingress.yaml

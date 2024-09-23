@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: gitlab
 spec:
-  type: NodePort
   selector:
     app: gitlab
   ports:

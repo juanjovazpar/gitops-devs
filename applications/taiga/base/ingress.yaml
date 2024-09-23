@@ -1,17 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: gitlab
+  name: taiga
 spec:
   ingressClassName: nginx
   rules:
-    - host: gitlab.oakdew.local
+    - host: taiga.oakdew.local
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: gitlab
+                name: taiga-gateway
                 port:
                   number: 80
