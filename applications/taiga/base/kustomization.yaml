@@ -1,3 +1,5 @@
+namespace: taiga
+
 resources:
   - ./configmap.yaml
   - ./deployment-async-rabbitmq.yaml

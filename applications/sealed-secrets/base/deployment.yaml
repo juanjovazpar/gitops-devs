@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sealed-secrets-controller
+  namespace: sealed-secrets
 spec:
   replicas: 1
   selector:
@@ -20,3 +21,10 @@ spec:
             - containerPort: 8080
           args:
             - '--key-renew-period=0'
+          resources:
+            requests:
+              memory: '256Mi'
+              cpu: '200m'
+            limits:
+              memory: '512Mi'
+              cpu: '300m'

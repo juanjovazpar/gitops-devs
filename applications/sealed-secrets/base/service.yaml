@@ -5,6 +5,7 @@ metadata:
 spec:
   selector:
     app: sealed-secrets
+  namespace: sealed-secrets
   ports:
     - protocol: TCP
       port: 8080

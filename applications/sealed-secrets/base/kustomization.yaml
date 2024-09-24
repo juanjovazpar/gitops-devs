@@ -1,3 +1,5 @@
+namespace: sealed-secrets
+
 resources:
   - crd.yaml
   - deployment.yaml

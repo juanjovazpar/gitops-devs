@@ -1,3 +1,5 @@
+namespace: devops
+
 resources:
   - ./deployment.yaml
   - ./pvc.yaml
