@@ -100,9 +100,14 @@ spec:
   selector:
     app: taiga-gateway
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 80
       targetPort: 80
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 443
 
 ---
 apiVersion: v1
