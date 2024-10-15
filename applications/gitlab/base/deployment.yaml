@@ -26,9 +26,45 @@ spec:
               memory: '4Gi'
               cpu: '1000m'
             limits:
-              memory: '8Gi'
-              cpu: '4000m'
+              memory: '12Gi'
+              cpu: '8000m'
       volumes:
         - name: gitlab-data
           persistentVolumeClaim:
             claimName: gitlab-pvc
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: gitlab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:6.2
+          ports:
+            - containerPort: 6379
+          resources:
+            requests:
+              memory: '1Gi'
+              cpu: '500m'
+            limits:
+              memory: '4Gi'
+              cpu: '2000m'
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data
+      volumes:
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: redis-pvc
