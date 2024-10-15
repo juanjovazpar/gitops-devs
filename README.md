@@ -109,10 +109,58 @@ else
 end
 ```
 
+Same erro for CI/CD in admin:
+
+```
+gitlab-rails dbconsole
+
+-- Clear project tokens
+UPDATE projects SET runners_token = null, runners_token_encrypted = null;
+
+-- Clear group tokens
+UPDATE namespaces SET runners_token = null, runners_token_encrypted = null;
+
+-- Clear instance tokens
+UPDATE application_settings SET runners_registration_token_encrypted = null;
+
+-- Clear runner tokens
+UPDATE ci_runners SET token = null, token_encrypted = null;
+https://docs.gitlab.com/ee/raketasks/backup_restore.html#reset-runner-registration-tokens
+```
+
+Edit:
+
+After clearing existing pipeline jobs (see above), I could still not open the ci settings page for some migrated projects where I had set environment variables. In this case try to remove them:
+
+```
+gitlab-rails dbconsole
+SELECT * FROM ci_variables;
+DELETE FROM ci_variables WHERE project_id='XX';
+```
+
 Gitlab runner have to be installed in the project through manifest file and the runner has to be registered in the gitlab project by opening terminal and running the command. CONFIG_VALUES_FILE is in gitlab folder:
 
 ```
 helm repo update gitlab
 
 helm install --namespace <NAMESPACE> --name gitlab-runner -f <CONFIG_VALUES_FILE> gitlab/gitlab-runner
+```
+
+Add to the runner configmap:
+
+```
+
+[[runners]]
+  name = "docker-runner"
+  executor = "docker"
+  [runners.custom_build_dir]
+  [runners.docker]
+    tls_verify = false
+    image = "docker:20.10.7"
+    privileged = true
+    disable_entrypoint_overwrite = false
+    oom_kill_disable = false
+    disable_cache = false
+    volumes = ["/cache"]
+    shm_size = 0
 ```

@@ -64,13 +64,13 @@ readinessProbe: {}
 ## The GitLab Server URL (with protocol) that want to register the runner against
 ## ref: https://docs.gitlab.com/runner/commands/index.html#gitlab-runner-register
 ##
-# gitlabUrl: https://gitlab.your-domain.com/
+gitlabUrl: https://gitlab:80/
 
 ## DEPRECATED: The Registration Token for adding new Runners to the GitLab Server.
 ##
 ## ref: https://docs.gitlab.com/ee/ci/runners/new_creation_workflow.html
 ##
-# runnerRegistrationToken: ""
+runnerRegistrationToken: ''
 
 ## The Runner Token for adding new Runners to the GitLab Server. This must
 ## be retrieved from your GitLab instance. It is the token of an already registered runner.
