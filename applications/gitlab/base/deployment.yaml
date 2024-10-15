@@ -26,8 +26,8 @@ spec:
               memory: '4Gi'
               cpu: '1000m'
             limits:
-              memory: '12Gi'
-              cpu: '8000m'
+              memory: '8Gi'
+              cpu: '4000m'
       volumes:
         - name: gitlab-data
           persistentVolumeClaim:
@@ -68,3 +68,45 @@ spec:
         - name: redis-data
           persistentVolumeClaim:
             claimName: redis-pvc
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitlab-runner
+  namespace: gitlab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitlab-runner
+  template:
+    metadata:
+      labels:
+        app: gitlab-runner
+    spec:
+      containers:
+        - name: gitlab-runner
+          image: gitlab/gitlab-runner:latest
+          env:
+            - name: CI_SERVER_URL
+              value: 'http://gitlab.gitlab.svc.cluster.local/'
+            - name: REGISTRATION_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: gitlab-secret
+                  key: REGISTRATION_TOKEN
+          volumeMounts:
+            - name: gitlab-runner-config
+              mountPath: /etc/gitlab-runner
+          resources:
+            requests:
+              memory: '4Gi'
+              cpu: '1000m'
+            limits:
+              memory: '8Gi'
+              cpu: '4000m'
+      volumes:
+        - name: gitlab-runner-config
+          configMap:
+            name: gitlab-runner-config

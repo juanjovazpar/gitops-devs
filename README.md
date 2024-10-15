@@ -72,3 +72,39 @@ If TLS is enabled for the Ingress, a Secret containing the certificate and key m
     tls.key: <base64 encoded key>
   type: kubernetes.io/tls
 ```
+
+## Gitlab
+
+Update file `gitlab.rb` to configure Redis:
+
+```
+gitlab_rails['redis_host'] = 'redis'
+gitlab_rails['redis_port'] = 6379
+gitlab_rails['redis_ssl'] = false
+gitlab_rails['redis_password'] = nil
+gitlab_rails['redis_database'] = 0
+gitlab_rails['redis_enable_client'] = true
+```
+
+Then restart the Gitlab:
+
+```
+gitlab-ctl reconfigure
+gitlab-ctl restart
+```
+
+### 500 error when accessing CI/CD in a project
+
+In Gitlab Pod Terminal run in `gitlab-rails console`:
+
+```
+projects = Project.all
+
+project = Project.find(<PROJECT_ID>)
+
+if project
+  project.update(runners_token_encrypted: nil)
+else
+  puts "Project not found."
+end
+```

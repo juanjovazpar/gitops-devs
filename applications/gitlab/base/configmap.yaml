@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gitlab-runner-config
+  namespace: gitlab
+data:
+  config.toml: |
+    [[runners]]
+      name = "Kubernetes Runner"
+      url = "http://gitlab.gitlab.svc.cluster.local/"
+      token = "GR1348941FJUqrVKv1JN_7D37URU8"
+      executor = "kubernetes"
+      [runners.kubernetes]
+        image = "gcr.io/kaniko-project/executor:latest"
+        namespace = "gitlab"
+        privileged = true
