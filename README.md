@@ -109,8 +109,10 @@ else
 end
 ```
 
-Gitlab runner have to be installed in the project through manifest file and the runner has to be registered in the gitlab project by opening terminal and running the command:
+Gitlab runner have to be installed in the project through manifest file and the runner has to be registered in the gitlab project by opening terminal and running the command. CONFIG_VALUES_FILE is in gitlab folder:
 
 ```
-gitlab-runner register
+helm repo update gitlab
+
+helm install --namespace <NAMESPACE> --name gitlab-runner -f <CONFIG_VALUES_FILE> gitlab/gitlab-runner
 ```
