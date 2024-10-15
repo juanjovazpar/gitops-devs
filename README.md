@@ -108,3 +108,9 @@ else
   puts "Project not found."
 end
 ```
+
+Gitlab runner have to be installed in the project through manifest file and the runner has to be registered in the gitlab project by opening terminal and running the command:
+
+```
+gitlab-runner register
+```
