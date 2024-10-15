@@ -90,7 +90,7 @@ spec:
           image: gitlab/gitlab-runner:latest
           env:
             - name: CI_SERVER_URL
-              value: 'http://gitlab.gitlab.svc.cluster.local/'
+              value: 'http://gitlab:80'
             - name: REGISTRATION_TOKEN
               valueFrom:
                 secretKeyRef:
