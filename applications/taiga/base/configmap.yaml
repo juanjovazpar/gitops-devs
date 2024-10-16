@@ -18,7 +18,8 @@ data:
   TAIGA_SUBPATH: ''
   TAIGA_WEBSOCKETS_URL: ws://taiga.oakdew.local
   ATTACHMENTS_MAX_AGE: '360'
-  GITLAB_URL: 'http://gitlab.oakdew.local'
+  GITLAB_URL: 'http://gitlab:80'
+  GITLAB_URL_FRONT: 'http://gitlab.oakdew.local'
   taiga.conf: |
     server {
       listen 80 default_server;
