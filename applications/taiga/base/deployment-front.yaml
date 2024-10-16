@@ -35,6 +35,25 @@ spec:
                 configMapKeyRef:
                   name: taiga-config
                   key: TAIGA_SUBPATH
+            - name: GITLAB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: taiga-config
+                  key: GITLAB_URL
+            - name: ENABLE_GITLAB_AUTH
+              value: 'true'
+            - name: PUBLIC_REGISTER_ENABLED
+              value: 'true'
+            - name: GITLAB_API_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: GITLAB_API_CLIENT_ID
+            - name: GITLAB_API_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: taiga-secret
+                  key: GITLAB_API_CLIENT_SECRET
           resources:
             requests:
               memory: '256Mi'
