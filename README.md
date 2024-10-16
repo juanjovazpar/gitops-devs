@@ -138,29 +138,39 @@ SELECT * FROM ci_variables;
 DELETE FROM ci_variables WHERE project_id='XX';
 ```
 
-Gitlab runner have to be installed in the project through manifest file and the runner has to be registered in the gitlab project by opening terminal and running the command. CONFIG_VALUES_FILE is in gitlab folder:
+### Install Gitlab runners in kubernetes
 
 ```
+helm repo add gitlab https://charts.gitlab.io
 helm repo update gitlab
+helm search repo -l gitlab/gitlab-runner | head -n10 # Search version to install
+helm pull gitlab/gitlab-runner --version <VERSION>
 
-helm install --namespace <NAMESPACE> --name gitlab-runner -f <CONFIG_VALUES_FILE> gitlab/gitlab-runner
+tar xf gitlab-runner-<VERSION>.tgz
+cd gitlab-runner
 ```
 
-Add to the runner configmap:
+Create a new Project Runner in Gitlab to obtain the runner token. With the runner token, install the runner in the cluster:
 
 ```
+helm install --namespace <NAMESPACE> --atomic --debug --timeout 120s --set gitlabUrl=<URL> --set runnerToken=<TOKEN> -f helm_values.yaml  gitlab-runner gitlab/gitlab-runner --version 0.69.0
+```
 
-[[runners]]
-  name = "docker-runner"
-  executor = "docker"
-  [runners.custom_build_dir]
-  [runners.docker]
-    tls_verify = false
-    image = "docker:20.10.7"
-    privileged = true
-    disable_entrypoint_overwrite = false
-    oom_kill_disable = false
-    disable_cache = false
-    volumes = ["/cache"]
-    shm_size = 0
+Content for file helm_values.yaml:
+
+```
+concurrent: 5
+logFormat: json
+rbac:
+  create: true
+  rules:
+    - apiGroups: [""]
+      resources: ["configmaps", "events", "pods", "pods/attach", "pods/exec", "secrets", "services"]
+      verbs: ["get", "list", "watch", "create", "patch", "update", "delete"]
+runners:
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        namespace = "{{.Release.Namespace}}"
+        image = "alpine"
 ```
