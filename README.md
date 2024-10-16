@@ -84,7 +84,13 @@ gitlab_rails['redis_ssl'] = false
 gitlab_rails['redis_password'] = nil
 gitlab_rails['redis_database'] = 0
 gitlab_rails['redis_enable_client'] = true
+
+...
+external_url <URL_FOR_GITLABL_TO_REACH_ITSELF>
+
 ```
+
+We can define variable `EXTERNAL_URL` when installing Gitlab to define this variable in the file.
 
 Then restart the Gitlab:
 
@@ -173,4 +179,29 @@ runners:
       [runners.kubernetes]
         namespace = "{{.Release.Namespace}}"
         image = "alpine"
+```
+
+In your project pipeline file:
+
+```
+stages:
+  - stage: Build
+
+# https://docs.gitlab.com/ee/ci/docker/using_kaniko.html
+build:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  variables:
+    CONTAINER_NAME: momomo
+    CONTAINER_TAG: 1.0.0
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination $CONTAINER_REGISTRY/$CONTAINER_NAME:$CONTAINER_TAG:latest"
+  when: manual
+  tags:
+    - kaniko
 ```
