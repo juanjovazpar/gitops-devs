@@ -49,11 +49,6 @@ spec:
                 secretKeyRef:
                   name: taiga-secret
                   key: GITLAB_API_CLIENT_ID
-            - name: GITLAB_API_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: taiga-secret
-                  key: GITLAB_OAUTH2_CLIENT_ID
             - name: GITLAB_API_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
@@ -63,7 +58,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: taiga-secret
-                  key: GITLAB_API_CLIENT_SECRET
+                  key: GITLAB_API_CLIENT_ID
           resources:
             requests:
               memory: '256Mi'
