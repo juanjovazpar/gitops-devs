@@ -4,4 +4,3 @@ resources:
   - ../../applications/gitlab/base
   - ../../applications/sealed-secrets/base
   - ../../applications/taiga/base
-  - ../../applications/argocd/base
