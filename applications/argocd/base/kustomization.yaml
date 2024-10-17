@@ -1,2 +1,4 @@
+namespace: devops
+
 resources:
   - ./ingress.yaml

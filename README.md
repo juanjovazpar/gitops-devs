@@ -205,3 +205,38 @@ build:
   tags:
     - kaniko
 ```
+
+Set external URL for Gitlab in file `/etc/gitlab/gitlab.rb `:
+
+```
+external_url "http://gitlab.example.com"
+```
+
+Set outbound conection in networks to allow webhook to local network. Get a access token in Gitlab from your user prefferences and use it to make this call:
+
+```
+curl --request PUT --header "PRIVATE-TOKEN: <TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "allow_local_requests_from_web_hooks_and_services": true
+  }' \
+"http://gitlab.oakdew.local/api/v4/application/settings"
+```
+
+Verify configurations:
+
+```
+curl --header "PRIVATE-TOKEN: <TOKEN>" \
+"http://gitlab.oakdew.local/api/v4/application/settings"
+```
+
+When you have error 500 in setting, it can be related with error `OpenSSL::Cipher::CipherError`. Try to run this in Pod terminal:
+
+```
+./bin/rails console
+
+Run the following Ruby statements:
+ApplicationSetting.first.delete
+ApplicationSetting.first
+exit
+```
