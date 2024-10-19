@@ -1,1 +1,2 @@
-./applications/gitlab/base/values.yaml
+applications/gitlab/base/runners/gitlab-runner-*.tgz
+applications/gitlab/base/runners/gitlab-runner/*

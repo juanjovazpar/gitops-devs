@@ -1,0 +1,42 @@
+gitlabUrl: http://gitlab
+runnerRegistrationToken: glrt-t3_xzrHwZsn9gknbaB2V5sb
+logLevel: debug
+concurrent: 5
+logFormat: json
+clusterWideAccess: true
+serviceAccount:
+  create: true
+  name: gitlab-runner
+rbac:
+  create: true
+  rules:
+    - apiGroups: ['']
+      resources:
+        [
+          'configmaps',
+          'events',
+          'pods',
+          'pods/attach',
+          'pods/exec',
+          'pods/log',
+          'secrets',
+          'serviceaccounts',
+          'services',
+          'namespaces',
+        ]
+      verbs: ['get', 'list', 'watch', 'create', 'patch', 'update', 'delete']
+    - apiGroups: ['']
+      resources: ['pods/log']
+      verbs: ['get', 'list']
+    - resources: ['serviceaccounts']
+      verbs: ['get']
+    - resources: ['namespaces']
+      verbs: ['create', 'delete']
+
+runners:
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        namespace = "{{.Release.Namespace}}"
+        image = "alpine"
+        privileged = true

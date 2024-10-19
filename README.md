@@ -120,17 +120,12 @@ Same erro for CI/CD in admin:
 ```
 gitlab-rails dbconsole
 
--- Clear project tokens
+-- Clear project tokens, Clear group tokens, Clear instance tokens, Clear runner tokens
 UPDATE projects SET runners_token = null, runners_token_encrypted = null;
-
--- Clear group tokens
 UPDATE namespaces SET runners_token = null, runners_token_encrypted = null;
-
--- Clear instance tokens
 UPDATE application_settings SET runners_registration_token_encrypted = null;
-
--- Clear runner tokens
 UPDATE ci_runners SET token = null, token_encrypted = null;
+
 https://docs.gitlab.com/ee/raketasks/backup_restore.html#reset-runner-registration-tokens
 ```
 
@@ -159,7 +154,7 @@ cd gitlab-runner
 Create a new Project Runner in Gitlab to obtain the runner token. With the runner token, install the runner in the cluster:
 
 ```
-helm install --namespace <NAMESPACE> --atomic --debug --timeout 120s --set gitlabUrl=<URL> --set runnerToken=<TOKEN> -f helm_values.yaml  gitlab-runner gitlab/gitlab-runner --version 0.69.0
+helm install --namespace devops gitlab-runner -f helm_values.yaml gitlab/gitlab-runner
 ```
 
 Content for file helm_values.yaml:
@@ -209,6 +204,12 @@ build:
 Set external URL for Gitlab in file `/etc/gitlab/gitlab.rb `:
 
 ```
+##! Note: During installation/upgrades, the value of the environment variable
+##! EXTERNAL_URL will be used to populate/replace this value.
+##! On AWS EC2 instances, we also attempt to fetch the public hostname/IP
+##! address from AWS. For more details, see:
+##! https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html
+
 external_url "http://gitlab.example.com"
 ```
 
@@ -233,9 +234,8 @@ curl --header "PRIVATE-TOKEN: <TOKEN>" \
 When you have error 500 in setting, it can be related with error `OpenSSL::Cipher::CipherError`. Try to run this in Pod terminal:
 
 ```
-./bin/rails console
+gitlab-rails console
 
-Run the following Ruby statements:
 ApplicationSetting.first.delete
 ApplicationSetting.first
 exit
