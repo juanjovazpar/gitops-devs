@@ -1,0 +1,4 @@
+namespace: devops
+
+resources:
+  - ./application.yaml

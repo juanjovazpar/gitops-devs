@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor
+  namespace: argocd
+spec:
+  destination:
+    name: 'in-cluster'
+    namespace: harbor
+  source:
+    repoURL: https://helm.goharbor.io
+    targetRevision: 'latest'
+    chart: harbor
+    helm:
+      parameters:
+        - name: expose.type
+          value: 'ingress'
+        - name: expose.ingress.host
+          value: 'harbor.example.com'
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
