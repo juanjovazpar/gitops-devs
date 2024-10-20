@@ -9,14 +9,23 @@ spec:
     namespace: harbor
   source:
     repoURL: https://helm.goharbor.io
-    targetRevision: 'latest'
+    targetRevision: 'v1.15.1'
     chart: harbor
     helm:
       parameters:
         - name: expose.type
           value: 'ingress'
-        - name: expose.ingress.host
-          value: 'harbor.example.com'
+        - name: expose.ingress.hosts.core
+          value: 'harbor.oakdew.local'
+        - name: expose.ingress.className
+          value: 'nginx'
+        - name: externalURL
+          value: 'harbor.oakdew.local'
+        - name: persistence.persistentVolumeClaim.registry.storageClass
+          value: 'nfs-client'
+        - name: persistence.persistentVolumeClaim.jobservice.jobLog.storageClass
+          value: 'nfs-client'
+          # TODO: Define a secret for the password HARBOR_ADMIN_PASSWORD
   project: default
   syncPolicy:
     automated:

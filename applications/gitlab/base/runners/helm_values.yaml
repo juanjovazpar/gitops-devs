@@ -1,5 +1,5 @@
 gitlabUrl: http://gitlab
-runnerRegistrationToken: glrt-t3_xzrHwZsn9gknbaB2V5sb
+runnerRegistrationToken: glrt-t3_w1yTBfSv6BmP7Z3xJKUk
 logLevel: debug
 concurrent: 5
 logFormat: json

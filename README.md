@@ -7,6 +7,9 @@
 
 `192.168.1.230 oakdew.local`
 
+### Set storage class default:
+kubectl patch storageclass <STORAGE_CLASS> -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+
 ### Install MetalLb
 
 Configure `kube-proxy`:
@@ -73,7 +76,7 @@ If TLS is enabled for the Ingress, a Secret containing the certificate and key m
   type: kubernetes.io/tls
 ```
 
-## Gitlab
+## Setup Gitlab
 
 Update file `gitlab.rb` to configure Redis:
 
@@ -155,50 +158,6 @@ Create a new Project Runner in Gitlab to obtain the runner token. With the runne
 
 ```
 helm install --namespace devops gitlab-runner -f helm_values.yaml gitlab/gitlab-runner
-```
-
-Content for file helm_values.yaml:
-
-```
-concurrent: 5
-logFormat: json
-rbac:
-  create: true
-  rules:
-    - apiGroups: [""]
-      resources: ["configmaps", "events", "pods", "pods/attach", "pods/exec", "secrets", "services"]
-      verbs: ["get", "list", "watch", "create", "patch", "update", "delete"]
-runners:
-  config: |
-    [[runners]]
-      [runners.kubernetes]
-        namespace = "{{.Release.Namespace}}"
-        image = "alpine"
-```
-
-In your project pipeline file:
-
-```
-stages:
-  - stage: Build
-
-# https://docs.gitlab.com/ee/ci/docker/using_kaniko.html
-build:
-  stage: build
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  variables:
-    CONTAINER_NAME: momomo
-    CONTAINER_TAG: 1.0.0
-  script:
-    - /kaniko/executor
-      --context "${CI_PROJECT_DIR}"
-      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
-      --destination $CONTAINER_REGISTRY/$CONTAINER_NAME:$CONTAINER_TAG:latest"
-  when: manual
-  tags:
-    - kaniko
 ```
 
 Set external URL for Gitlab in file `/etc/gitlab/gitlab.rb `:
