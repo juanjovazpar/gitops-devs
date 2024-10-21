@@ -199,3 +199,18 @@ ApplicationSetting.first.delete
 ApplicationSetting.first
 exit
 ```
+
+### Harbor from local machine
+To `docker login` to harbor from local machine, you need to add the trusted insecure:
+
+```
+sudo nano /etc/docker/daemon.json
+```
+
+Add the following content:
+
+```
+{
+  "insecure-registries" : ["harbor.oakdew.local]
+}
+```

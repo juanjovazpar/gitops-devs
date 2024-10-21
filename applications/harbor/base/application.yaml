@@ -6,7 +6,7 @@ metadata:
 spec:
   destination:
     name: 'in-cluster'
-    namespace: harbor
+    namespace: devops
   source:
     repoURL: https://helm.goharbor.io
     targetRevision: 'v1.15.1'
