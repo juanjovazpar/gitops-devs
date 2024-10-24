@@ -17,8 +17,10 @@ spec:
           value: 'true'
         - name: ingress.hosts[0].host
           value: git.oakdew.local
-        - name: spec.rules[0].http.paths
-          value: /
+        - name: ingress.hosts[0].paths[0].path
+          value: '/'
+        - name: ingress.hosts[0].paths[0].pathType
+          value: 'Prefix'
   project: default
   syncPolicy:
     automated:
