@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitea
+  namespace: argocd
+spec:
+  destination:
+    name: 'in-cluster'
+    namespace: gitea
+  source:
+    repoURL: https://dl.gitea.com/charts/
+    targetRevision: 'v9.6.1'
+    chart: gitea
+    helm:
+      parameters:
+        - name: ingress.enabled
+          value: 'true'
+        - name: ingress.hosts[0].host
+          value: git.oakdew.local
+        - name: spec.rules[0].http.paths
+          value: /
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
