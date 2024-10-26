@@ -13,13 +13,13 @@ data:
   RABBITMQ_USER: taiga
   RABBITMQ_VHOST: taiga
   TAIGA_SITES_SCHEME: https
-  TAIGA_SITES_DOMAIN: taiga.oakdew.local
-  TAIGA_URL: http://taiga.oakdew.local
+  TAIGA_SITES_DOMAIN: taiga.oakdew.biz
+  TAIGA_URL: http://taiga.oakdew.biz
   TAIGA_SUBPATH: ''
-  TAIGA_WEBSOCKETS_URL: ws://taiga.oakdew.local
+  TAIGA_WEBSOCKETS_URL: ws://taiga.oakdew.biz
   ATTACHMENTS_MAX_AGE: '360'
   GITLAB_URL: 'http://gitlab:80'
-  GITLAB_URL_FRONT: 'http://gitlab.oakdew.local'
+  GITLAB_URL_FRONT: 'http://gitlab.oakdew.biz'
   taiga.conf: |
     server {
       listen 80 default_server;
