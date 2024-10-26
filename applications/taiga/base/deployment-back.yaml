@@ -149,18 +149,11 @@ spec:
                 configMapKeyRef:
                   name: taiga-config
                   key: TAIGA_ADMIN_USERNAME
-            - name: GITLAB_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: taiga-config
-                  key: GITLAB_URL
             - name: TAIGA_ADMIN_EMAIL
               valueFrom:
                 secretKeyRef:
                   name: taiga-secret
                   key: TAIGA_ADMIN_EMAIL
-            - name: ENABLE_GITLAB_AUTH
-              value: 'True'
             - name: PUBLIC_REGISTER_ENABLED
               value: 'True'
             - name: TAIGA_ADMIN_EMAIL
@@ -193,16 +186,6 @@ spec:
                 secretKeyRef:
                   name: taiga-secret
                   key: SECRET_KEY
-            - name: GITLAB_API_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: taiga-secret
-                  key: GITLAB_API_CLIENT_ID
-            - name: GITLAB_API_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: taiga-secret
-                  key: GITLAB_API_CLIENT_SECRET
           resources:
             requests:
               memory: '256Mi'
