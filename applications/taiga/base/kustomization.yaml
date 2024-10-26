@@ -16,3 +16,4 @@ resources:
   - ./service.yaml
   - ./job.yaml
   - ./ingress.yaml
+  - ./certificate.yaml
