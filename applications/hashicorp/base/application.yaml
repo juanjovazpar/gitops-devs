@@ -4,6 +4,7 @@ metadata:
   name: hashicorp
   namespace: argocd
 spec:
+  project: default
   destination:
     name: 'in-cluster'
     namespace: hashicorp
@@ -15,7 +16,6 @@ spec:
       parameters:
         - name: expose.type
           value: 'ingress'
-  project: default
   syncPolicy:
     automated:
       prune: true

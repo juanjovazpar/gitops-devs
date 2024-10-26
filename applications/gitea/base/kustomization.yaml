@@ -2,3 +2,4 @@ namespace: devops
 
 resources:
   - ./application.yaml
+  - ./certificate.yaml

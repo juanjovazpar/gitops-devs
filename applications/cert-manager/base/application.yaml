@@ -4,6 +4,7 @@ metadata:
   name: cert-manager
   namespace: argocd
 spec:
+  project: default
   destination:
     name: 'in-cluster'
     namespace: cert-manager
@@ -15,7 +16,6 @@ spec:
       parameters:
         - name: installCRDs
           value: 'true'
-  project: default
   syncPolicy:
     automated:
       prune: true

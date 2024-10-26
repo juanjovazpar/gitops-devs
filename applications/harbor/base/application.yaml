@@ -4,9 +4,10 @@ metadata:
   name: harbor
   namespace: argocd
 spec:
+  project: default
   destination:
     name: 'in-cluster'
-    namespace: devops
+    namespace: harbor
   source:
     repoURL: https://helm.goharbor.io
     targetRevision: 'v1.15.1'
@@ -16,18 +17,39 @@ spec:
         - name: expose.type
           value: 'ingress'
         - name: expose.ingress.hosts.core
-          value: 'harbor.oakdew.local'
+          value: 'harbor.oakdew.biz'
+        - name: expose.tls.secret.secretName
+          value: 'harbor.oakdew.biz'
         - name: expose.ingress.className
-          value: 'nginx'
+          value: 'harbor-oakdew-cert'
+        - name: expose.ingress.annotations.external-dns.alpha.kubernetes.io/cloudflare-proxied
+          value: 'true'
+        - name: expose.ingress.annotations.external-dns.alpha.kubernetes.io/hostname
+          value: 'harbor.oakdew.biz'
+        - name: expose.ingress.annotations.external-dns.alpha.kubernetes.io/target
+          value: '5860ec34-d45a-45b8-b1e4-9fefd97a59a4.cfargotunnel.com'
         - name: externalURL
-          value: 'harbor.oakdew.local'
+          value: 'harbor.oakdew.biz'
         - name: persistence.persistentVolumeClaim.registry.storageClass
           value: 'nfs-client'
         - name: persistence.persistentVolumeClaim.jobservice.jobLog.storageClass
           value: 'nfs-client'
           # TODO: Define a secret for the password HARBOR_ADMIN_PASSWORD
-  project: default
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: harbor-oakdew-cert
+  namespace: harbor
+spec:
+  secretName: harbor-oakdew-cert
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+    - harbor.oakdew.biz

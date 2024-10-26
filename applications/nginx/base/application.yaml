@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    name: 'in-cluster'
+    namespace: nginx
+  source:
+    repoURL: https://kubernetes.github.io/ingress-nginx
+    targetRevision: 'v4.11.3'
+    chart: ingress-nginx
+    helm:
+      parameters:
+        - name: controller.service.type
+          value: 'ClusterIP'
+        - name: controller.ingressClassResource.default
+          value: 'true'
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

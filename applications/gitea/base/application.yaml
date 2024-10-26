@@ -4,6 +4,7 @@ metadata:
   name: gitea
   namespace: argocd
 spec:
+  project: default
   destination:
     name: 'in-cluster'
     namespace: gitea
@@ -15,13 +16,20 @@ spec:
       parameters:
         - name: ingress.enabled
           value: 'true'
+        - name: ingress.tls[0].secretName
+          value: 'taiga-oakdew-cert'
+        - name: ingress.annotations.external-dns.alpha.kubernetes.io/cloudflare-proxied
+          value: 'true'
+        - name: ingress.annotations.external-dns.alpha.kubernetes.io/hostname
+          value: 'gitea.oakdew.biz'
+        - name: ingress.annotations.external-dns.alpha.kubernetes.io/target
+          value: '5860ec34-d45a-45b8-b1e4-9fefd97a59a4.cfargotunnel.com'
         - name: ingress.hosts[0].host
-          value: git.oakdew.local
+          value: gitea.oakdew.biz
         - name: ingress.hosts[0].paths[0].path
           value: '/'
         - name: ingress.hosts[0].paths[0].pathType
           value: 'Prefix'
-  project: default
   syncPolicy:
     automated:
       prune: true
